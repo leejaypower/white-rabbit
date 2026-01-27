@@ -29,12 +29,12 @@ export class WsGateway
   }
 
   handleConnection(client: WebSocket) {
-    console.log('⚡ Operative connected');
+    console.log('⚡ Client connected');
     this.pulseService.register(client);
   }
 
   handleDisconnect(client: WebSocket) {
-    console.log('💔 Operative disconnected');
+    console.log('💔 Client disconnected');
     this.signalService.jackOut(client);
     this.pulseService.unregister(client);
   }
