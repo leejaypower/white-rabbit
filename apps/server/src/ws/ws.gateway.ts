@@ -9,6 +9,8 @@ import {
 import { Server, WebSocket } from 'ws';
 import { WsEvent } from '@white-rabbit/shared';
 import { PulseService } from './pulse.service';
+import { SignalService } from '../signal/signal.service';
+import { JackInPayload } from '@white-rabbit/shared';
 
 @WebSocketGateway()
 export class WsGateway
@@ -17,7 +19,10 @@ export class WsGateway
   @WebSocketServer()
   server!: Server;
 
-  constructor(private readonly pulseService: PulseService) {}
+  constructor(
+    private readonly pulseService: PulseService,
+    private readonly signalService: SignalService,
+  ) {}
 
   afterInit() {
     console.log('🔌 WebSocket Gateway initialized');
@@ -30,7 +35,13 @@ export class WsGateway
 
   handleDisconnect(client: WebSocket) {
     console.log('💔 Operative disconnected');
+    this.signalService.jackOut(client);
     this.pulseService.unregister(client);
+  }
+
+  @SubscribeMessage(WsEvent.JACK_IN)
+  handleJackIn(client: WebSocket, data: JackInPayload) {
+    this.signalService.jackIn(client, data);
   }
 
   @SubscribeMessage(WsEvent.PULSE)
