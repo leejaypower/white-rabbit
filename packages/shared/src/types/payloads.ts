@@ -6,23 +6,23 @@ import type { SignalStatus } from './status';
 
 /** Payload for jack_in event (register connection) */
 export interface JackInPayload {
-  access_code: string;
-  terminal_id: string;
+  accessCode: string;
+  terminalId: string;
 }
 
 /** Payload for ring event (request call) */
 export interface RingPayload {
-  target_handle: string;
+  targetTerminalId: string;
 }
 
 /** Payload for patch_through event (accept call) */
 export interface PatchThroughPayload {
-  caller_handle: string;
+  callerTerminalId: string;
 }
 
 /** Payload for disconnect event (reject call) */
 export interface DisconnectPayload {
-  caller_handle: string;
+  callerTerminalId: string;
 }
 
 // ============================================
@@ -31,13 +31,13 @@ export interface DisconnectPayload {
 
 /** Payload for signal event (presence broadcast) */
 export interface SignalPayload {
-  terminal_id: string;
+  terminalId: string;
   status: SignalStatus;
 }
 
 /** Payload for incoming event (incoming call notification) */
 export interface IncomingPayload {
-  caller_handle: string;
+  callerTerminalId: string;
 }
 
 // ============================================
@@ -46,14 +46,14 @@ export interface IncomingPayload {
 
 /** Payload for hardline event (WebRTC signaling) */
 export interface HardlinePayload {
-  target_handle: string;
+  targetTerminalId: string;
   /** SDP offer/answer or ICE candidate */
   data: unknown;
 }
 
 /** Payload for jack_out event (end call) */
 export interface JackOutPayload {
-  target_handle: string;
+  targetTerminalId: string;
 }
 
 /** Payload for pulse event (heartbeat) */
