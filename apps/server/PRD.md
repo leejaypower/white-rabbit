@@ -43,9 +43,9 @@ Operative 접속 상태 관리
 ### 3. Access Code (License)
 
 Access Code 활성화 및 검증
-
 - 최초 활성화 시 Terminal 바인딩
-- Operative가 생성한 identity에 바인딩 (`terminal_id`, `handle`)
+- `terminal_id`는 Operative가 생성한 공개키 (예: `ed25519:abc123...`)
+- 개인키는 클라이언트에만 저장, Operator는 공개키만 알고 있음
 - Operator는 fingerprinting을 수행하지 않음
 - Access Code 검증은 jack_in 시마다 수행
 - Jacked out 상태에서는 서비스 이용 불가
@@ -58,7 +58,7 @@ Access Code 활성화 및 검증
 
 | Event | Direction | 설명 |
 |-------|-----------|------|
-| `jack_in` | Operative → Operator | Operative 접속 (`access_code`, `terminal_id`, `handle` 포함) |
+| `jack_in` | Operative → Operator | Operative 접속 (`access_code`, `terminal_id` 포함) |
 | `signal` | Operator → Operative | 연락처 상태 업데이트 |
 | `ring` | Operative → Operator | 통화 요청 |
 | `incoming` | Operator → Operative | 수신 통화 알림 |
@@ -75,7 +75,7 @@ Access Code 활성화 및 검증
 ### 영구 저장 (Persistent)
 
 - Access Code 목록
-- Terminal 바인딩 정보 (`terminal_id` ↔ `access_code`)
+- Terminal 바인딩 정보 (`terminal_id`(공개키) ↔ `access_code`)
 
 ### 메모리 저장 (In-Memory)
 
