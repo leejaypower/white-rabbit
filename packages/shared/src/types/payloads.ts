@@ -8,7 +8,6 @@ import type { SignalStatus } from './status';
 export interface JackInPayload {
   access_code: string;
   terminal_id: string;
-  handle: string;
 }
 
 /** Payload for ring event (request call) */
@@ -32,7 +31,7 @@ export interface DisconnectPayload {
 
 /** Payload for signal event (presence broadcast) */
 export interface SignalPayload {
-  handle: string;
+  terminal_id: string;
   status: SignalStatus;
 }
 

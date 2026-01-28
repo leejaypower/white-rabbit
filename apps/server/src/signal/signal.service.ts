@@ -12,18 +12,18 @@ export class SignalService {
 
   /** Register operative link and broadcast JACKED_IN signal */
   jackIn(client: WebSocket, payload: JackInPayload): void {
-    const { handle } = payload;
-    this.linkStore.register(handle, client);
-    console.log(`📡 Operative "${handle}" jacked in`);
-    this.broadcast({ handle, status: 'JACKED_IN' });
+    const { terminal_id } = payload;
+    this.linkStore.register(terminal_id, client);
+    console.log(`📡 Terminal "${terminal_id}" jacked in`);
+    this.broadcast({ terminal_id, status: 'JACKED_IN' });
   }
 
   /** Remove operative link and broadcast JACKED_OUT signal */
   jackOut(client: WebSocket): void {
-    const handle = this.linkStore.unregister(client);
-    if (handle) {
-      console.log(`📡 Operative "${handle}" jacked out`);
-      this.broadcast({ handle, status: 'JACKED_OUT' });
+    const terminalId = this.linkStore.unregister(client);
+    if (terminalId) {
+      console.log(`📡 Terminal "${terminalId}" jacked out`);
+      this.broadcast({ terminal_id: terminalId, status: 'JACKED_OUT' });
     }
   }
 
