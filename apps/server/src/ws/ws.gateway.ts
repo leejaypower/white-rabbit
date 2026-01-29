@@ -7,10 +7,18 @@ import {
   SubscribeMessage, ConnectedSocket, MessageBody,
 } from '@nestjs/websockets';
 import { WebSocket } from 'ws';
-import { WsEvent } from '@white-rabbit/shared';
+import {
+  WsEvent,
+  JackInPayload,
+  RingPayload,
+  PatchThroughPayload,
+  DisconnectPayload,
+  HardlinePayload,
+  JackOutPayload,
+} from '@white-rabbit/shared';
 import { PulseService } from './pulse.service';
 import { SignalService } from '../signal/signal.service';
-import { JackInPayload } from '@white-rabbit/shared';
+import { HardlineService } from '../hardline/hardline.service';
 
 @WebSocketGateway()
 export class WsGateway
@@ -19,6 +27,7 @@ export class WsGateway
   constructor(
     private readonly pulseService: PulseService,
     private readonly signalService: SignalService,
+    private readonly hardlineService: HardlineService,
   ) {}
 
   afterInit() {
@@ -39,6 +48,31 @@ export class WsGateway
   @SubscribeMessage(WsEvent.JACK_IN)
   handleJackIn(@ConnectedSocket() client: WebSocket, @MessageBody() data: JackInPayload) {
     this.signalService.jackIn(client, data);
+  }
+
+  @SubscribeMessage(WsEvent.RING)
+  handleRing(@ConnectedSocket() client: WebSocket, @MessageBody() data: RingPayload) {
+    this.hardlineService.ring(client, data);
+  }
+
+  @SubscribeMessage(WsEvent.PATCH_THROUGH)
+  handlePatchThrough(@ConnectedSocket() client: WebSocket, @MessageBody() data: PatchThroughPayload) {
+    this.hardlineService.patchThrough(client, data);
+  }
+
+  @SubscribeMessage(WsEvent.DISCONNECT)
+  handleReject(@ConnectedSocket() client: WebSocket, @MessageBody() data: DisconnectPayload) {
+    this.hardlineService.disconnect(client, data);
+  }
+
+  @SubscribeMessage(WsEvent.HARDLINE)
+  handleHardline(@ConnectedSocket() client: WebSocket, @MessageBody() data: HardlinePayload) {
+    this.hardlineService.relay(client, data);
+  }
+
+  @SubscribeMessage(WsEvent.JACK_OUT)
+  handleJackOut(@ConnectedSocket() client: WebSocket, @MessageBody() data: JackOutPayload) {
+    this.hardlineService.jackOut(client, data);
   }
 
   @SubscribeMessage(WsEvent.PULSE)
