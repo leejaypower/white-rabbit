@@ -4,10 +4,12 @@ import type { SignalStatus } from './status';
 // Operative → Operator
 // ============================================
 
-/** Payload for jack_in event (register connection) */
+/** Payload for jack_in event (register/authenticate connection) */
 export interface JackInPayload {
   accessCode: string;
   terminalId: string;
+  timestamp: number;
+  signature: string;
 }
 
 /** Payload for ring event (request call) */
