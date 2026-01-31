@@ -5,12 +5,14 @@ import type { ConnectionStatus } from './status';
  * Server does not store contact lists.
  */
 export interface Contact {
-  /** Local unique identifier */
-  id: string;
+  /** Terminal ID (primary key, unique, immutable) */
+  terminalId: string;
   /** User-defined display name (editable) */
   name: string;
-  /** Public identifier for P2P connection */
-  handle: string;
   /** Current connection status */
   status: ConnectionStatus;
+  /** Unix timestamp when contact was added */
+  addedAt: number;
+  /** Unix timestamp of last seen online */
+  lastSeenAt?: number;
 }

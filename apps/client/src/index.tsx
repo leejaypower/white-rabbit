@@ -1,4 +1,5 @@
 import { render, Text, Box } from 'ink';
+import React from 'react';
 
 const App = () => {
   return (
