@@ -2,16 +2,31 @@ import { Injectable } from '@nestjs/common';
 import { WebSocket } from 'ws';
 import { WsEvent, JackInPayload, SignalPayload } from '@white-rabbit/shared';
 import { LinkStore } from './link.store';
+import { AccessCodeService } from '../access-code/access-code.service';
 
 /**
  * Handles operative jack-in / jack-out and broadcasts presence signals.
  */
 @Injectable()
 export class SignalService {
-  constructor(private readonly linkStore: LinkStore) {}
+  constructor(
+    private readonly linkStore: LinkStore,
+    private readonly accessCodeService: AccessCodeService,
+  ) {}
 
   /** Register operative link and broadcast JACKED_IN signal */
-  jackIn(client: WebSocket, payload: JackInPayload): void {
+  async jackIn(client: WebSocket, payload: JackInPayload): Promise<void> {
+    const result = await this.accessCodeService.validate(payload);
+    if (!result.valid) {
+      client.send(
+        JSON.stringify({
+          event: WsEvent.ERROR,
+          data: { reason: result.reason },
+        }),
+      );
+      return;
+    }
+
     const { terminalId } = payload;
     this.linkStore.register(terminalId, client);
     console.log(`📡 Terminal "${terminalId}" jacked in`);

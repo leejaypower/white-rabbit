@@ -25,6 +25,8 @@ export const WsEvent = {
   JACK_OUT: 'jack_out',
   /** Heartbeat for connection keep-alive */
   PULSE: 'pulse',
+  /** Error response */
+  ERROR: 'error',
 } as const;
 
 export type WsEventType = (typeof WsEvent)[keyof typeof WsEvent];

@@ -9,11 +9,17 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
+    "@mikro-orm/core": "^6.6.0",
+    "@mikro-orm/migrations": "^6.6.0",
+    "@mikro-orm/nestjs": "^6.1.0",
+    "@mikro-orm/postgresql": "^6.6.0",
     "@nestjs/common": "^11.1.12",
+    "@nestjs/config": "^4.0.0",
     "@nestjs/core": "^11.1.12",
     "@nestjs/platform-express": "^11.1.12",
     "@nestjs/platform-ws": "^11.1.12",
     "@nestjs/websockets": "^11.1.12",
+    "@noble/ed25519": "^2.3.0",
     "@white-rabbit/shared": "workspace:*",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",

@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:17
+    ports:
+      - '1995:5432'
+    environment:
+      POSTGRES_DB: white_rabbit
+      POSTGRES_USER: rabbit
+      POSTGRES_PASSWORD: rabbit
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
