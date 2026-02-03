@@ -3,16 +3,18 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "build": "tsup src/index.ts --format cjs --dts",
+    "dev": "tsx watch src/index.tsx",
+    "build": "tsup src/index.tsx --format cjs --dts",
     "start": "node dist/index.js",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "test:init": "tsx src/storage/test-init.ts"
   },
   "dependencies": {
     "ink": "^5.0.0",
     "react": "^18.2.0"
   },
   "devDependencies": {
+    "@types/node": "^20.0.0",
     "@types/react": "^18.2.0",
     "tsup": "^8.0.0",
     "tsx": "^4.7.0",
